@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rearrange Pages</title>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <style>
+        body { font-family: Arial; text-align: center; }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 600px;
+            margin: auto;
+        }
+
+        .page {
+            margin: 10px;
+            cursor: grab;
+        }
+
+        .page img {
+            width: 120px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Drag to Rearrange Pages</h2>
+
+<div id="pages" class="container">
+    {% for img in images %}
+        <div class="page" data-id="{{ loop.index }}">
+            <img src="{{ url_for('static', filename=img) }}">
+            <p>Page {{ loop.index }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+<form action="/process" method="post" onsubmit="prepareOrder()">
+    <input type="hidden" name="order" id="order">
+    <input type="hidden" name="filename" value="{{filename}}">
+    <button type="submit">Download Rearranged PDF</button>
+</form>
+
+<script>
+    new Sortable(document.getElementById('pages'), {
+        animation: 150
+    });
+
+    function prepareOrder() {
+        let items = document.querySelectorAll('.page');
+        let order = [];
+        items.forEach(item => order.push(item.getAttribute('data-id')));
+        document.getElementById('order').value = order.join(',');
+    }
+</script>
+
+</body>
+</html>

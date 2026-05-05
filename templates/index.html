@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Rearranger</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        .upload-box { border: 2px dashed #aaa; padding: 40px; width: 300px; margin: auto; }
+    </style>
+</head>
+<body>
+    <h1>PDF Rearranger</h1>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="upload-box">
+            <input type="file" name="pdf" accept="application/pdf" required>
+            <br><br>
+            <button type="submit">Upload</button>
+        </div>
+    </form>
+</body>
