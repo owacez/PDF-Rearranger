@@ -1,20 +1,141 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>PDF Rearranger</title>
     <style>
-        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        body { font-family: Arial,sans-serif; text-align: center; margin-top: 50px; }
         .upload-box { border: 2px dashed #aaa; padding: 40px; width: 300px; margin: auto; }
     </style>
+    <style>
+        body {
+            font-family: Arial,sans-serif;
+            text-align: center;
+            margin-top: 60px;
+            background: #f5f7fa;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .upload-box {
+            border: 2px dashed #8900AE;
+            padding: 40px;
+            width: 320px;
+            margin: auto;
+            border-radius: 12px;
+            background: #faf7fd;
+        }
+
+        /* Hide default input */
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Custom file button */
+        .file-label {
+            display: inline-block;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #8900AE, #5d0076);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        .file-label:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+        }
+
+        /* File name text */
+        #file-name {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Button Styling */
+        button {
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+
+            background: linear-gradient(135deg, #8900AE, #5d0076);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* Shine effect */
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.4) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: skewX(-20deg);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+        }
+
+        button:hover::before {
+            left: 125%;
+            transition: left 0.6s ease;
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
+
 <body>
+
     <h1>PDF Rearranger</h1>
 
     <form action="/upload" method="post" enctype="multipart/form-data">
         <div class="upload-box">
-            <input type="file" name="pdf" accept="application/pdf" required>
-            <br><br>
+            <input type="file" id="file-input" name="pdf" accept="application/pdf" required>
+            <label for="file-input" class="file-label">Choose PDF</label>
+            <span id="file-name">No file selected</span>
+            <br>
             <button type="submit">Upload</button>
         </div>
     </form>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const fileName = document.getElementById('file-name');
+
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                fileName.textContent = this.files[0].name;
+            } else {
+                fileName.textContent = "No file selected";
+            }
+        });
+    </script>
+
 </body>
+
+</html>
